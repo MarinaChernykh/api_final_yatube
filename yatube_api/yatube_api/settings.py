@@ -1,4 +1,6 @@
 import os
+from datetime import timedelta
+
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -16,8 +18,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'api',
-    'posts',
+    'django_filters',
+    'djoser',
+    'api.apps.ApiConfig',
+    'posts.apps.PostsConfig',
 ]
 
 MIDDLEWARE = [
@@ -86,8 +90,22 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static/'),)
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     ],
+
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=14),
+    'AUTH_HEADER_TYPES': ('Bearer',),
 }
