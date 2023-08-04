@@ -12,6 +12,8 @@
 ## Технологии
 - Python 3.7
 - Django 3.2
+- DjangoRestFramework 3.12
+- SQLite
 
 ## Как запустить проект
 
